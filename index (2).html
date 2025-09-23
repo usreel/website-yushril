@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil M. Yusril Amri</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap');
+
+        /* Background Utama */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            background-color: #000;
+            overflow-x: hidden;
+            border: 5px solid #00ff00; /* Pinggiran hijau */
+            animation: pulse-border 2s infinite; /* Animasi pinggiran */
+        }
+
+        /* Animasi Pinggiran Hijau Menyala */
+        @keyframes pulse-border {
+            0% { border-color: #00ff00; }
+            50% { border-color: #008000; }
+            100% { border-color: #00ff00; }
+        }
+
+        /* Background Futuristik dengan Garis Biru dan Hijau Menyala */
+        .futuristic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(to right, #000, #1a1a1a);
+            background-size: 400% 400%;
+            animation: gradient-animation 15s ease infinite;
+        }
+
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Garis Menyala */
+        .glowing-line {
+            position: fixed;
+            z-index: -1;
+            opacity: 0.7;
+        }
+        .glowing-line.line1 { top: 10%; left: 0; width: 100%; height: 2px; background: linear-gradient(to right, #00f, #0f0); animation: glow-line 5s infinite; }
+        .glowing-line.line2 { top: 50%; left: 0; width: 100%; height: 2px; background: linear-gradient(to right, #0f0, #00f); animation: glow-line 7s infinite reverse; }
+
+        @keyframes glow-line {
+            0% { box-shadow: 0 0 5px #00f, 0 0 10px #0f0; }
+            50% { box-shadow: 0 0 10px #00f, 0 0 20px #0f0; }
+            100% { box-shadow: 0 0 5px #00f, 0 0 10px #0f0; }
+        }
+
+        /* Bagian Welcome */
+        .welcome-section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(to right, red, blue);
+            overflow: hidden;
+            animation: background-change 10s infinite alternate;
+        }
+
+        /* Animasi Background Welcome */
+        @keyframes background-change {
+            0% { background-color: blue; }
+            100% { background-color: red; }
+        }
+
+        .welcome-content {
+            z-index: 10;
+        }
+        
+        .welcome-content h1 {
+            font-size: 6rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: fly-in 2s forwards;
+            color: white;
+            position: relative;
+        }
+
+        .welcome-content h1::after {
+            content: '🥶';
+        }
+        
+        @keyframes fly-in {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .welcome-content p {
+            font-size: 1.5rem;
+            color: white;
+            animation: fade-in 3s forwards;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* Awan dan Burung */
+        .sky-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #87ceeb, #e0f6ff);
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .bird {
+            width: 50px;
+            height: auto;
+            position: absolute;
+            animation: fly-bird 10s linear infinite;
+        }
+
+        .bird1 { top: 10%; left: -20%; animation-delay: 1s; }
+        .bird2 { top: 30%; left: -40%; animation-delay: 5s; }
+        .bird3 { top: 50%; left: -30%; animation-delay: 8s; }
+
+        @keyframes fly-bird {
+            from { transform: translateX(-100vw); }
+            to { transform: translateX(200vw); }
+        }
+
+        .cloud {
+            width: 150px;
+            height: auto;
+            position: absolute;
+            opacity: 0.8;
+            animation: move-cloud 20s linear infinite;
+        }
+
+        .cloud1 { top: 20%; left: -20%; }
+        .cloud2 { top: 60%; left: -50%; animation-delay: 10s; }
+
+        @keyframes move-cloud {
+            from { transform: translateX(-100vw); }
+            to { transform: translateX(200vw); }
+        }
+
+        /* Kotak Terjemahan */
+        .translation-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: #1a1a1a;
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .translation-box h4 {
+            margin: 0 0 10px 0;
+            color: #00ff00;
+        }
+
+        .translation-box button {
+            background-color: #00ff00;
+            color: #000;
+            border: none;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .translation-box button:hover {
+            transform: scale(1.1);
+            background-color: #008000;
+        }
+
+        /* Bagian Profil */
+        .profile-section {
+            padding: 50px 20px;
+            background-color: #000;
+            border-top: 5px solid;
+            border-image: linear-gradient(to right, #00ff00, #008000) 1;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            scroll-snap-align: start;
+        }
+
+        .profile-card {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #1a1a1a;
+            border: 2px solid #00ff00;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .profile-card img.profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #00ff00;
+            display: block;
+            margin: 0 auto 20px;
+            animation: glow-photo 3s infinite alternate;
+        }
+
+        @keyframes glow-photo {
+            from { box-shadow: 0 0 5px #00ff00; }
+            to { box-shadow: 0 0 20px #00ff00; }
+        }
+
+        h2 {
+            text-align: center;
+            color: #00ff00;
+            border-bottom: 2px solid #00ff00;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .biodata p, .history-text p {
+            margin: 10px 0;
+            border-left: 3px solid #00ff00;
+            padding-left: 15px;
+            position: relative;
+        }
+        
+        .biodata p::before, .history-text p::before {
+            content: '⚡';
+            position: absolute;
+            left: -15px;
+            color: #00ff00;
+        }
+        
+        .section-title {
+            color: #00ff00;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Statistik */
+        .statistics {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 40px;
+        }
+
+        .chart-container {
+            width: 45%;
+            min-width: 300px;
+            margin: 15px;
+            background-color: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+
+        /* Diagram Lingkaran */
+        .pie-chart {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-image: conic-gradient(
+                #00ff00 0% 40%,
+                #ff00ff 40% 90%,
+                #ffff00 90% 100%
+            );
+            margin: 20px auto;
+        }
+
+        /* Diagram Batang */
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            height: 150px;
+            background-color: #444;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .bar {
+            width: 30px;
+            margin: 0 10px;
+            background-color: #00ff00;
+            transition: height 0.5s ease-in-out;
+            position: relative;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+        
+        .bar-game { height: 50%; background-color: #ff00ff; }
+        .bar-belajar { height: 10%; background-color: #ffff00; }
+
+        .bar-label {
+            position: absolute;
+            bottom: -20px;
+            color: #fff;
+            white-space: nowrap;
+        }
+        
+        /* Diagram Kurva */
+        .chart-container.line {
+            min-width: 600px;
+            margin: 30px auto;
+        }
+
+        /* Bagian Visi Misi dan Motto */
+        .accordion-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        
+        .accordion-item {
+            background-color: #2a2a2a;
+            border: 1px solid #00ff00;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .accordion-header {
+            background-color: #00ff00;
+            color: #000;
+            padding: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .accordion-content {
+            padding: 15px;
+            display: none;
+        }
+        
+        .accordion-content.active {
+            display: block;
+        }
+
+        /* Prestasi */
+        .achievement-section {
+            padding: 50px 20px;
+            background-color: #1a1a1a;
+            text-align: center;
+        }
+
+        .achievement-card {
+            background-color: #2a2a2a;
+            border: 2px solid #00ff00;
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 500px;
+            margin: 20px auto;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+        }
+
+        .achievement-card img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            border: 2px solid #00ff00;
+            margin-bottom: 15px;
+        }
+        
+        .achievement-card h3 {
+            color: #00ff00;
+            margin-bottom: 10px;
+        }
+
+        .achievement-card p {
+            color: #ddd;
+        }
+        
+        /* Sejarah Hidup */
+        .history-section {
+            padding: 50px 20px;
+            background-color: #1a1a1a;
+            text-align: center;
+            border-top: 5px solid;
+            border-image: linear-gradient(to right, #00ff00, #008000) 1;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+        }
+        
+        .history-card {
+            background-color: #2a2a2a;
+            border: 2px solid #00ff00;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="translation-box">
+        <h4>Ubah Bahasa</h4>
+        <button onclick="changeLanguage('id')">ID</button>
+        <button onclick="changeLanguage('en')">EN</button>
+        <button onclick="changeLanguage('jv')">JV</button>
+        <button onclick="changeLanguage('ar')">AR</button>
+    </div>
+
+    <div class="welcome-section" id="welcome">
+        <div class="sky-bg">
+            <img src="https://www.freeiconspng.com/uploads/blue-sky-with-clouds-background-12.png" alt="Awan" class="cloud cloud1">
+            <img src="https://www.freeiconspng.com/uploads/blue-sky-with-clouds-background-12.png" alt="Awan" class="cloud cloud2">
+            <img src="https://www.pngall.com/wp-content/uploads/5/Bird-Flying-PNG-Images-HD.png" alt="Burung" class="bird bird1">
+            <img src="https://www.pngall.com/wp-content/uploads/5/Bird-Flying-PNG-Images-HD.png" alt="Burung" class="bird bird2">
+            <img src="https://www.pngall.com/wp-content/uploads/5/Bird-Flying-PNG-Images-HD.png" alt="Burung" class="bird bird3">
+        </div>
+        <div class="welcome-content">
+            <h1 data-lang-key="welcome-title">Welcome to my profile</h1>
+            <p data-lang-key="welcome-text">Sugeng rawuh ing profilku.</p>
+            <a href="#profil" style="text-decoration: none;">
+                <img src="yusril.jpg" alt="Foto Profil" class="profile-photo-circle" style="width: 100px; height: 100px; border-radius: 50%; border: 4px solid #00ff00; cursor: pointer; margin-top: 20px; animation: pulse-photo 2s infinite;">
+            </a>
+        </div>
+    </div>
+
+    <div class="profile-section" id="profil">
+        <div class="futuristic-bg"></div>
+        <div class="glowing-line line1"></div>
+        <div class="glowing-line line2"></div>
+        <div class="profile-card">
+            <img src="yusril.jpg" alt="Foto Profil Yusril" class="profile-photo">
+            <h2 data-lang-key="biodata-title">Biodata</h2>
+            <div class="biodata">
+                <p><strong data-lang-key="biodata-name-label">Nama:</strong> <span data-lang-key="biodata-name">M. Yusril Amri</span></p>
+                <p><strong data-lang-key="biodata-birth-label">Tanggal Lahir:</strong> <span data-lang-key="biodata-birth">21 Desember 2009</span></p>
+                <p><strong data-lang-key="biodata-address-label">Alamat:</strong> <span data-lang-key="biodata-address">Karang Jompo Dukuh Pulosari RT 1 / RW 4</span></p>
+                <p><strong data-lang-key="biodata-phone-label">No. Telepon:</strong> <span data-lang-key="biodata-phone">0896349846900</span></p>
+                <p><strong data-lang-key="biodata-gmail-label">Gmail:</strong> <span data-lang-key="biodata-gmail">uzumakisubron@gmail.com</span></p>
+                <p><strong data-lang-key="biodata-education-label">Pendidikan:</strong> <span data-lang-key="biodata-education">TK MUSLIMAT NU KARANG JOMPO, SD TIRTO 01, SMP N 1 TIRTO, SMK MAARIF NU TIRTO</span></p>
+                <p><strong data-lang-key="biodata-hobbies-label">Hobi & Kegiatan:</strong> <span data-lang-key="biodata-hobbies">Main game, Mancing, Sepak bola</span></p>
+            </div>
+        </div>
+        
+        <div class="history-section">
+            <h2 class="section-title" data-lang-key="history-title">Sejarah Hidup</h2>
+            <div class="history-card">
+                <div class="history-text">
+                    <p data-lang-key="history-p1">Lahir di sebuah kota kecil, hidupku dimulai dengan mimpi sederhana: menjadi pribadi yang kuat dan bermanfaat. Sejak kecil, aku sudah akrab dengan lapangan sepak bola. Di sana, aku belajar tentang kerja keras, sportifitas, dan bagaimana bangkit setelah terjatuh.</p>
+                    <p data-lang-key="history-p2">Perjalanan pendidikan membawaku dari TK hingga SMK. Di setiap jenjang, aku bertemu teman-teman baru dan guru-guru hebat yang membentuk karakterku. Selain sepak bola, hobiku yang lain seperti main game dan memancing mengajarkanku kesabaran dan strategi.</p>
+                    <p data-lang-key="history-p3">Hidup ini penuh tantangan, tapi aku percaya setiap langkah adalah pelajaran. Prinsip "Belajar Hari Ini, Sukses di Masa Depan" adalah peganganku untuk terus maju, tidak pernah menyerah pada keadaan.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title" data-lang-key="stats-title">Statistik Aktivitas</h2>
+        <div class="statistics">
+            <div class="chart-container">
+                <h3 data-lang-key="pie-chart-title">Diagram Lingkaran</h3>
+                <div class="pie-chart"></div>
+                <p style="text-align: center; margin-top: 10px;">
+                    <span style="color: #ff00ff;" data-lang-key="stat-game">50% Game</span> | 
+                    <span style="color: #ffff00;" data-lang-key="stat-study">10% Belajar</span> | 
+                    <span style="color: #00ff00;" data-lang-key="stat-other">40% Lain-lain</span>
+                </p>
+            </div>
+            <div class="chart-container">
+                <h3 data-lang-key="bar-chart-title">Diagram Batang</h3>
+                <div class="bar-chart">
+                    <div class="bar bar-game" style="height: 50%;">
+                        <div class="bar-label" data-lang-key="stat-game-label">Game 50%</div>
+                    </div>
+                    <div class="bar bar-belajar" style="height: 10%;">
+                        <div class="bar-label" data-lang-key="stat-study-label">Belajar 10%</div>
+                    </div>
+                    <div class="bar" style="height: 40%; background-color: #00ff00;">
+                        <div class="bar-label" data-lang-key="stat-other-label">Lain-lain 40%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container line">
+            <h3 style="text-align: center;" data-lang-key="line-chart-title">Progres Belajar vs. Bermain Game (Minggu ke-1 sampai ke-5)</h3>
+            <canvas id="myLineChart"></canvas>
+        </div>
+
+        <div class="accordion-container">
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion('visiMisi')">
+                    <span data-lang-key="accordion-vision-mission">Visi Misi</span>
+                    <span>+</span>
+                </div>
+                <div class="accordion-content" id="visiMisi">
+                    <p><strong data-lang-key="vision-label">Visi:</strong> <span data-lang-key="vision-text">Menjadi pribadi yang berintegritas dan bermanfaat bagi sesama.</span></p>
+                    <p><strong data-lang-key="mission-label">Misi:</strong> <span data-lang-key="mission-text">Terus belajar dan berkembang, memanfaatkan setiap kesempatan untuk meraih kesuksesan, dan memberikan kontribusi positif di lingkungan sekitar.</span></p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion('motto')">
+                    <span data-lang-key="accordion-motto">Motto</span>
+                    <span>+</span>
+                </div>
+                <div class="accordion-content" id="motto">
+                    <p style="font-style: italic; font-weight: bold; color: #00ff00;" data-lang-key="motto-text">"BELAJAR HARI INI. SUKSES DI MASA DEPAN"</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="achievement-section">
+            <h2 class="section-title" data-lang-key="achievement-title">Prestasi</h2>
+            <div class="achievement-card">
+                <img src="prestasi.jpg" alt="Foto Juara Liga 2 Pantura">
+                <h3 data-lang-key="achievement-subtitle">Juara Liga 2 Pantura</h3>
+                <p data-lang-key="achievement-text">Menjadi juara pertama dalam kompetisi sepak bola Liga 2 Pantura. Sebuah pengalaman luar biasa yang menguji semangat dan kerja sama tim.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data terjemahan
+        const translations = {
+            id: {
+                'welcome-title': 'Selamat Datang di Profil Saya',
+                'welcome-text': 'Sugeng rawuh ing profilku.',
+                'biodata-title': 'Biodata',
+                'biodata-name-label': 'Nama:',
+                'biodata-birth-label': 'Tanggal Lahir:',
+                'biodata-address-label': 'Alamat:',
+                'biodata-phone-label': 'No. Telepon:',
+                'biodata-gmail-label': 'Gmail:',
+                'biodata-education-label': 'Pendidikan:',
+                'biodata-hobbies-label': 'Hobi & Kegiatan:',
+                'history-title': 'Sejarah Hidup',
+                'history-p1': 'Lahir di sebuah kota kecil, hidupku dimulai dengan mimpi sederhana: menjadi pribadi yang berintegritas dan bermanfaat bagi sesama. Sejak kecil, aku sudah akrab dengan lapangan sepak bola. Di sana, aku belajar tentang kerja keras, sportifitas, dan bagaimana bangkit setelah terjatuh.',
+                'history-p2': 'Perjalanan pendidikan membawaku dari TK hingga SMK. Di setiap jenjang, aku bertemu teman-teman baru dan guru-guru hebat yang membentuk karakterku. Selain sepak bola, hobiku yang lain seperti main game dan memancing mengajarkanku kesabaran dan strategi.',
+                'history-p3': 'Hidup ini penuh tantangan, tapi aku percaya setiap langkah adalah pelajaran. Prinsip "Belajar Hari Ini, Sukses di Masa Depan" adalah peganganku untuk terus maju, tidak pernah menyerah pada keadaan.',
+                'stats-title': 'Statistik Aktivitas',
+                'pie-chart-title': 'Diagram Lingkaran',
+                'stat-game': '50% Game',
+                'stat-study': '10% Belajar',
+                'stat-other': '40% Lain-lain',
+                'bar-chart-title': 'Diagram Batang',
+                'stat-game-label': 'Game 50%',
+                'stat-study-label': 'Belajar 10%',
+                'stat-other-label': 'Lain-lain 40%',
+                'line-chart-title': 'Progres Belajar vs. Bermain Game (Minggu ke-1 sampai ke-5)',
+                'accordion-vision-mission': 'Visi Misi',
+                'vision-label': 'Visi:',
+                'vision-text': 'Menjadi pribadi yang berintegritas dan bermanfaat bagi sesama.',
+                'mission-label': 'Misi:',
+                'mission-text': 'Terus belajar dan berkembang, memanfaatkan setiap kesempatan untuk meraih kesuksesan, dan memberikan kontribusi positif di lingkungan sekitar.',
+                'accordion-motto': 'Motto',
+                'motto-text': '"BELAJAR HARI INI. SUKSES DI MASA DEPAN"',
+                'achievement-title': 'Prestasi',
+                'achievement-subtitle': 'Juara Liga 2 Pantura',
+                'achievement-text': 'Menjadi juara pertama dalam kompetisi sepak bola Liga 2 Pantura. Sebuah pengalaman luar biasa yang menguji semangat dan kerja sama tim.'
+            },
+            en: {
+                'welcome-title': 'Welcome to my profile',
+                'welcome-text': 'Welcome to my profile.',
+                'biodata-title': 'Biodata',
+                'biodata-name-label': 'Name:',
+                'biodata-birth-label': 'Date of Birth:',
+                'biodata-address-label': 'Address:',
+                'biodata-phone-label': 'Phone Number:',
+                'biodata-gmail-label': 'Gmail:',
+                'biodata-education-label': 'Education:',
+                'biodata-hobbies-label': 'Hobbies & Activities:',
+                'history-title': 'Life History',
+                'history-p1': 'Born in a small town, my life began with a simple dream: to become a person of integrity who is useful to others. Since childhood, I have been familiar with the soccer field. There, I learned about hard work, sportsmanship, and how to get up after falling.',
+                'history-p2': 'My educational journey took me from kindergarten to vocational high school. At each level, I met new friends and great teachers who shaped my character. In addition to soccer, my other hobbies such as gaming and fishing taught me patience and strategy.',
+                'history-p3': 'Life is full of challenges, but I believe every step is a lesson. The principle "LEARN TODAY. SUCCEED TOMORROW" is my guide to keep moving forward, never giving up on circumstances.',
+                'stats-title': 'Activity Statistics',
+                'pie-chart-title': 'Pie Chart',
+                'stat-game': '50% Gaming',
+                'stat-study': '10% Studying',
+                'stat-other': '40% Other',
+                'bar-chart-title': 'Bar Chart',
+                'stat-game-label': 'Gaming 50%',
+                'stat-study-label': 'Studying 10%',
+                'stat-other-label': 'Other 40%',
+                'line-chart-title': 'Study vs. Gaming Progress (Week 1 to 5)',
+                'accordion-vision-mission': 'Vision and Mission',
+                'vision-label': 'Vision:',
+                'vision-text': 'To become a person of integrity and be useful to others.',
+                'mission-label': 'Mission:',
+                'mission-text': 'To keep learning and growing, seizing every opportunity to achieve success, and making a positive contribution to the community.',
+                'accordion-motto': 'Motto',
+                'motto-text': '"LEARN TODAY. SUCCEED TOMORROW"',
+                'achievement-title': 'Achievements',
+                'achievement-subtitle': 'Pantura League 2 Champion',
+                'achievement-text': 'Became the first-place winner in the Pantura League 2 soccer competition. An extraordinary experience that tested our team\'s spirit and cooperation.'
+            },
+            jv: {
+                'welcome-title': 'Sugeng Rawuh ing Profil Kulo',
+                'welcome-text': 'Sugeng rawuh ing profilku.',
+                'biodata-title': 'Biodata',
+                'biodata-name-label': 'Asma:',
+                'biodata-birth-label': 'Tanggal Lair:',
+                'biodata-address-label': 'Alamat:',
+                'biodata-phone-label': 'No. Telpon:',
+                'biodata-gmail-label': 'Gmail:',
+                'biodata-education-label': 'Pendidikan:',
+                'biodata-hobbies-label': 'Hobi & Kagiyatan:',
+                'history-title': 'Sejarah Urip',
+                'history-p1': 'Lair ing sawijining kutha cilik, uripku diwiwiti kanthi impen sing prasaja: dadi pribadi sing duwe integritas lan migunani kanggo wong liya. Wiwit cilik, aku wis kenal karo lapangan bal-balan. Ing kono, aku sinau babagan kerja keras, sportifitas, lan carane tangi maneh sawise tiba.',
+                'history-p2': 'Lelakuning pendhidhikan nggawa aku saka TK nganti SMK. Ing saben tataran, aku ketemu kanca-kanca anyar lan guru-guru gedhe sing mbentuk karakterku. Saliyane bal-balan, hobiku liyane kaya main game lan mancing mulang aku sabar lan strategi.',
+                'history-p3': 'Urip iki kebak tantangan, nanging aku percaya saben langkah iku piwulang. Prinsip "SINAU DINA IKI. SUKSES ING MBESUK" dadi pedomanku kanggo terus maju, ora tau nyerah marang kahanan.',
+                'stats-title': 'Statistik Kagiyatan',
+                'pie-chart-title': 'Diagram Bunder',
+                'stat-game': '50% Game',
+                'stat-study': '10% Sinau',
+                'stat-other': '40% Liyane',
+                'bar-chart-title': 'Diagram Batang',
+                'stat-game-label': 'Game 50%',
+                'stat-study-label': 'Sinau 10%',
+                'stat-other-label': 'Liyane 40%',
+                'line-chart-title': 'Kemajuan Sinau vs. Main Game (Minggu kaping 1 nganti 5)',
+                'accordion-vision-mission': 'Visi Misi',
+                'vision-label': 'Visi:',
+                'vision-text': 'Dadi pribadi sing duwe integritas lan migunani kanggo wong liya.',
+                'mission-label': 'Misi:',
+                'mission-text': 'Terus sinau lan ngembangake diri, nggunakake saben kesempatan kanggo nggayuh sukses, lan menehi kontribusi positif ing lingkungan sekitar.',
+                'accordion-motto': 'Motto',
+                'motto-text': '"SINAU DINA IKI. SUKSES ING MBESUK"',
+                'achievement-title': 'Prestasi',
+                'achievement-subtitle': 'Juara Liga 2 Pantura',
+                'achievement-text': 'Dadi juara siji ing kompetisi bal-balan Liga 2 Pantura. Pengalaman sing luar biasa sing nguji semangat lan kerja sama tim.'
+            },
+            ar: {
+                'welcome-title': 'أهلاً بك في ملفي الشخصي',
+                'welcome-text': 'أهلاً بك في ملفي الشخصي.',
+                'biodata-title': 'السيرة الذاتية',
+                'biodata-name-label': 'الاسم:',
+                'biodata-birth-label': 'تاريخ الميلاد:',
+                'biodata-address-label': 'العنوان:',
+                'biodata-phone-label': 'رقم الهاتف:',
+                'biodata-gmail-label': 'البريد الإلكتروني:',
+                'biodata-education-label': 'التعليم:',
+                'biodata-hobbies-label': 'الهوايات والأنشطة:',
+                'history-title': 'تاريخ الحياة',
+                'history-p1': 'ولدت في مدينة صغيرة، بدأت حياتي بحلم بسيط: أن أصبح شخصًا يتمتع بالنزاهة ويكون مفيدًا للآخرين. منذ الطفولة، كنت معتادًا على ملعب كرة القدم. هناك، تعلمت عن العمل الجاد، والروح الرياضية، وكيفية النهوض بعد السقوط.',
+                'history-p2': 'رحلتي التعليمية نقلتني من رياض الأطفال إلى المدرسة الثانوية المهنية. في كل مستوى، التقيت بأصدقاء جدد ومعلمين رائعين شكلوا شخصيتي. بالإضافة إلى كرة القدم، هواياتي الأخرى مثل الألعاب والصيد علمتني الصبر والاستراتيجية.',
+                'history-p3': 'الحياة مليئة بالتحديات، ولكني أؤمن أن كل خطوة هي درس. مبدأ "تعلم اليوم. تنجح غدا" هو دليلي للمضي قدمًا، وعدم الاستسلام للظروف أبدًا.',
+                'stats-title': 'إحصائيات الأنشطة',
+                'pie-chart-title': 'الرسم البياني الدائري',
+                'stat-game': '50% ألعاب',
+                'stat-study': '10% دراسة',
+                'stat-other': '40% أخرى',
+                'bar-chart-title': 'الرسم البياني العمودي',
+                'stat-game-label': 'ألعاب 50%',
+                'stat-study-label': 'دراسة 10%',
+                'stat-other-label': 'أخرى 40%',
+                'line-chart-title': 'تقدم الدراسة مقابل الألعاب (الأسبوع 1 إلى 5)',
+                'accordion-vision-mission': 'الرؤية والرسالة',
+                'vision-label': 'الرؤية:',
+                'vision-text': 'أن أصبح شخصًا يتمتع بالنزاهة ويكون مفيدًا للآخرين.',
+                'mission-label': 'الرسالة:',
+                'mission-text': 'مواصلة التعلم والنمو، واغتنام كل فرصة لتحقيق النجاح، وتقديم مساهمة إيجابية للمجتمع.',
+                'accordion-motto': 'الشعار',
+                'motto-text': '"تعلم اليوم. تنجح غدا"',
+                'achievement-title': 'الإنجازات',
+                'achievement-subtitle': 'بطل دوري بانتورا 2',
+                'achievement-text': 'فاز بالمركز الأول في مسابقة كرة القدم بدوري بانتورا 2. تجربة رائعة اختبرت روح فريقنا وتعاوننا.'
+            }
+        };
+
+        function changeLanguage(lang) {
+            const elements = document.querySelectorAll('[data-lang-key]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-lang-key');
+                if (translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+
+            // Update chart labels
+            myLineChart.options.plugins.title.text = translations[lang]['line-chart-title'];
+            myLineChart.data.datasets[0].label = translations[lang]['stat-study-label'].replace('10%', '').trim();
+            myLineChart.data.datasets[1].label = translations[lang]['stat-game-label'].replace('50%', '').trim();
+            myLineChart.update();
+        }
+
+        // Script untuk Diagram Kurva
+        const ctx = document.getElementById('myLineChart').getContext('2d');
+        const myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4', 'Minggu 5'],
+                datasets: [{
+                    label: 'Progres Belajar (%)',
+                    data: [10, 15, 20, 25, 30],
+                    borderColor: '#ffff00',
+                    backgroundColor: 'rgba(255, 255, 0, 0.2)',
+                    tension: 0.4
+                }, {
+                    label: 'Progres Bermain Game (%)',
+                    data: [50, 45, 40, 35, 30],
+                    borderColor: '#ff00ff',
+                    backgroundColor: 'rgba(255, 0, 255, 0.2)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Progres Belajar vs. Bermain Game',
+                        color: '#00ff00'
+                    },
+                    legend: {
+                        labels: {
+                            color: '#fff'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 60,
+                        ticks: {
+                            color: '#fff'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.2)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#fff'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.2)'
+                        }
+                    }
+                }
+            }
+        });
+
+        function toggleAccordion(id) {
+            var content = document.getElementById(id);
+            var header = content.previousElementSibling;
+            if (content.style.display === "block") {
+                content.style.display = "none";
+                header.querySelector('span:last-child').textContent = '+';
+            } else {
+                content.style.display = "block";
+                header.querySelector('span:last-child').textContent = '-';
+            }
+        }
+    </script>
+</body>
+</html>
