@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kasir Ayam Krispi & Geprek</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .receipt-font { font-family: 'Courier New', Courier, monospace; }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        
+        /* Custom scrollbar for better mobile feel */
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+
+    <div class="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+        <!-- Header Section -->
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+            <div>
+                <h1 class="text-3xl font-extrabold text-orange-600 tracking-tight flex items-center gap-2">
+                    <span>🍗</span> AYAM KRISPI JAYA
+                </h1>
+                <p class="text-slate-500 font-medium text-sm">Sistem Penjualan Cepat & Akurat</p>
+            </div>
+            <div id="clock" class="bg-white px-6 py-2 rounded-2xl shadow-sm border border-slate-200 font-bold text-slate-700 tabular-nums">
+                00:00:00
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Left Side: Menu Selection -->
+            <div class="lg:col-span-7 xl:col-span-8">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-bold text-slate-800">Pilihan Menu</h2>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-xs font-bold">UTAMA</span>
+                        <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs font-bold">TAMBAHAN</span>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-4" id="menu-container">
+                    <!-- Menu cards injected here -->
+                </div>
+            </div>
+
+            <!-- Right Side: Order Summary -->
+            <div class="lg:col-span-5 xl:col-span-4">
+                <div class="bg-white rounded-[2.5rem] shadow-xl shadow-slate-200/50 overflow-hidden border border-slate-100 flex flex-col sticky top-6 max-h-[calc(100vh-100px)]">
+                    <div class="p-6 border-b border-slate-50 flex justify-between items-center bg-slate-50/50">
+                        <h2 class="text-lg font-bold text-slate-800">Daftar Belanja</h2>
+                        <button onclick="clearCart()" class="text-xs font-bold text-red-500 hover:text-red-700 transition-colors">HAPUS SEMUA</button>
+                    </div>
+
+                    <div id="cart-content" class="flex-grow overflow-y-auto p-6 space-y-4 custom-scroll">
+                        <!-- Empty State -->
+                        <div class="flex flex-col items-center justify-center py-10 opacity-30 text-center">
+                            <span class="text-6xl mb-2">🛒</span>
+                            <p class="font-bold text-slate-900 leading-tight">Belum ada pesanan</p>
+                            <p class="text-xs">Klik menu di samping untuk menambah</p>
+                        </div>
+                    </div>
+
+                    <div class="p-6 bg-white border-t border-slate-100 space-y-4">
+                        <div class="flex justify-between items-end">
+                            <div>
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Bayar</p>
+                                <p class="text-3xl font-black text-slate-900" id="grand-total">Rp 0</p>
+                            </div>
+                            <button id="checkout-btn" disabled onclick="openPayment()" 
+                                    class="h-14 px-8 bg-orange-600 text-white rounded-2xl font-black hover:bg-orange-700 disabled:opacity-20 disabled:grayscale transition-all shadow-lg shadow-orange-200">
+                                BAYAR
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Payment Input -->
+    <div id="pay-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-md hidden items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-[3rem] w-full max-w-md shadow-2xl overflow-hidden p-8">
+            <h3 class="text-2xl font-black text-slate-800 mb-8 text-center uppercase tracking-tight">Proses Pembayaran</h3>
+            
+            <div class="space-y-6">
+                <div class="bg-slate-50 p-6 rounded-3xl border border-slate-100">
+                    <p class="text-xs font-bold text-slate-400 uppercase mb-1">Total Tagihan</p>
+                    <p class="text-4xl font-black text-orange-600" id="modal-bill">Rp 0</p>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 uppercase ml-2 mb-2 italic">Jumlah Uang Diterima</label>
+                    <div class="relative">
+                        <span class="absolute left-5 top-1/2 -translate-y-1/2 font-bold text-slate-400">Rp</span>
+                        <input type="number" id="cash-input" placeholder="0" 
+                               class="w-full text-3xl font-black p-6 pl-14 bg-slate-50 border-2 border-slate-200 rounded-[2rem] focus:border-orange-500 focus:bg-white focus:outline-none transition-all">
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center px-4">
+                    <span class="text-sm font-bold text-slate-500 italic">Kembalian:</span>
+                    <span class="text-2xl font-black text-green-600" id="change-val">Rp 0</span>
+                </div>
+            </div>
+
+            <div class="flex gap-3 mt-10">
+                <button onclick="closePayment()" class="flex-1 py-4 font-bold text-slate-400 hover:text-slate-600 transition-colors">BATAL</button>
+                <button id="print-btn" onclick="confirmPayment()" 
+                        class="flex-[2] py-4 bg-orange-600 text-white rounded-[1.5rem] font-black hover:bg-orange-700 shadow-xl shadow-orange-100 disabled:opacity-20">
+                    CETAK STRUK
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Print Receipt -->
+    <div id="receipt-modal" class="fixed inset-0 bg-slate-900/90 hidden items-center justify-center p-4 z-[60]">
+        <div class="bg-white p-8 rounded-xl w-full max-w-[320px] shadow-2xl">
+            <div id="receipt-view" class="receipt-font text-xs leading-relaxed text-slate-800">
+                <!-- Receipt content injected here -->
+            </div>
+            <button onclick="newOrder()" class="mt-8 w-full py-4 bg-slate-900 text-white rounded-xl font-bold text-sm tracking-widest hover:bg-black transition-all">
+                SELESAI
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Updated Data: Including Ayam Geprek and Nasi
+        const menuItems = [
+            { id: 1, name: 'Ayam Geprek', price: 7000, icon: '🌶️', color: 'bg-red-50' },
+            { id: 2, name: 'Dada', price: 5000, icon: '🍗', color: 'bg-orange-50' },
+            { id: 3, name: 'Paha Atas', price: 5000, icon: '🍗', color: 'bg-orange-50' },
+            { id: 4, name: 'Sayap', price: 4000, icon: '🍗', color: 'bg-orange-50' },
+            { id: 5, name: 'Nasi', price: 3000, icon: '🍚', color: 'bg-blue-50' },
+            { id: 6, name: 'Hati', price: 4500, icon: '🍢', color: 'bg-pink-50' },
+            { id: 7, name: 'Leher', price: 2500, icon: '🧣', color: 'bg-yellow-50' },
+            { id: 8, name: 'Ceker', price: 1000, icon: '🐾', color: 'bg-slate-50' },
+            { id: 9, name: 'Tahu', price: 500, icon: '🧊', color: 'bg-yellow-50' }
+        ];
+
+        let cart = [];
+        let total = 0;
+
+        function init() {
+            const container = document.getElementById('menu-container');
+            container.innerHTML = menuItems.map(item => `
+                <button onclick="addToCart(${item.id})" 
+                        class="${item.color} p-4 rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all text-left flex flex-col justify-between h-36 relative overflow-hidden group">
+                    <span class="text-3xl relative z-10">${item.icon}</span>
+                    <div class="relative z-10">
+                        <div class="font-extrabold text-slate-800 text-sm leading-tight">${item.name}</div>
+                        <div class="text-orange-600 font-black text-base mt-1 italic">Rp${item.price.toLocaleString('id-ID')}</div>
+                    </div>
+                    <div class="absolute -right-2 -bottom-2 text-6xl opacity-5 group-hover:opacity-10 transition-opacity">${item.icon}</div>
+                </button>
+            `).join('');
+            
+            setInterval(updateClock, 1000);
+            updateClock();
+        }
+
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toLocaleTimeString('id-ID');
+        }
+
+        function addToCart(id) {
+            const product = menuItems.find(m => m.id === id);
+            const found = cart.find(c => c.id === id);
+            
+            if (found) {
+                found.qty++;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+            renderUI();
+        }
+
+        function updateQty(id, delta) {
+            const index = cart.findIndex(c => c.id === id);
+            if (index !== -1) {
+                cart[index].qty += delta;
+                if (cart[index].qty <= 0) cart.splice(index, 1);
+            }
+            renderUI();
+        }
+
+        function renderUI() {
+            const content = document.getElementById('cart-content');
+            const totalDisplay = document.getElementById('grand-total');
+            const checkoutBtn = document.getElementById('checkout-btn');
+
+            if (cart.length === 0) {
+                content.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-10 opacity-30 text-center">
+                        <span class="text-6xl mb-2">🛒</span>
+                        <p class="font-bold text-slate-900 leading-tight">Belum ada pesanan</p>
+                        <p class="text-xs">Klik menu di samping untuk menambah</p>
+                    </div>`;
+                total = 0;
+                checkoutBtn.disabled = true;
+            } else {
+                checkoutBtn.disabled = false;
+                total = cart.reduce((a, b) => a + (b.price * b.qty), 0);
+                
+                content.innerHTML = cart.map(item => `
+                    <div class="flex items-center justify-between p-1">
+                        <div class="flex-grow">
+                            <h4 class="font-bold text-slate-800 text-sm">${item.name}</h4>
+                            <p class="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">Rp${item.price.toLocaleString('id-ID')} / porsi</p>
+                        </div>
+                        <div class="flex items-center gap-2 bg-slate-100 rounded-xl p-1 px-3">
+                            <button onclick="updateQty(${item.id}, -1)" class="w-6 h-6 flex items-center justify-center font-black text-slate-400 hover:text-red-600">-</button>
+                            <span class="text-sm font-black text-slate-700 min-w-[20px] text-center">${item.qty}</span>
+                            <button onclick="updateQty(${item.id}, 1)" class="w-6 h-6 flex items-center justify-center font-black text-slate-400 hover:text-green-600">+</button>
+                        </div>
+                        <div class="w-20 text-right font-black text-slate-900 text-sm ml-4">
+                            ${(item.price * item.qty).toLocaleString('id-ID')}
+                        </div>
+                    </div>
+                `).join('');
+            }
+            totalDisplay.innerText = `Rp ${total.toLocaleString('id-ID')}`;
+        }
+
+        function clearCart() {
+            cart = [];
+            renderUI();
+        }
+
+        // Payment Logic
+        const payModal = document.getElementById('pay-modal');
+        const cashIn = document.getElementById('cash-input');
+        const changeVal = document.getElementById('change-val');
+        const printBtn = document.getElementById('print-btn');
+
+        function openPayment() {
+            document.getElementById('modal-bill').innerText = `Rp ${total.toLocaleString('id-ID')}`;
+            cashIn.value = '';
+            changeVal.innerText = 'Rp 0';
+            printBtn.disabled = true;
+            payModal.classList.remove('hidden');
+            payModal.classList.add('flex');
+            setTimeout(() => cashIn.focus(), 200);
+        }
+
+        function closePayment() {
+            payModal.classList.add('hidden');
+            payModal.classList.remove('flex');
+        }
+
+        cashIn.addEventListener('input', () => {
+            const val = parseInt(cashIn.value) || 0;
+            const diff = val - total;
+            changeVal.innerText = `Rp ${Math.max(0, diff).toLocaleString('id-ID')}`;
+            
+            printBtn.disabled = val < total;
+        });
+
+        function confirmPayment() {
+            const cash = parseInt(cashIn.value) || 0;
+            const change = cash - total;
+            const now = new Date();
+            
+            let receiptItems = cart.map(item => `
+${item.name.padEnd(15)} x${item.qty.toString().padEnd(3)} ${ (item.price * item.qty).toLocaleString('id-ID').padStart(10) }`).join('');
+
+            document.getElementById('receipt-view').innerHTML = `
+                <div class="text-center font-bold text-base mb-1 italic">AYAM KRISPI JAYA</div>
+                <div class="text-center text-[10px] mb-4">Jl. Raya Sukses No. 88<br>Tlp: 0812-3456-7890<br>${now.toLocaleDateString()} ${now.toLocaleTimeString()}</div>
+                <div class="border-t border-dashed border-slate-300 my-2"></div>
+                <pre class="whitespace-pre-wrap">${receiptItems}</pre>
+                <div class="border-t border-dashed border-slate-300 my-2"></div>
+                <div class="flex justify-between font-bold text-sm">
+                    <span>TOTAL</span>
+                    <span>Rp ${total.toLocaleString('id-ID')}</span>
+                </div>
+                <div class="flex justify-between mt-1">
+                    <span>TUNAI</span>
+                    <span>Rp ${cash.toLocaleString('id-ID')}</span>
+                </div>
+                <div class="flex justify-between mt-1">
+                    <span>KEMBALI</span>
+                    <span>Rp ${change.toLocaleString('id-ID')}</span>
+                </div>
+                <div class="border-t border-dashed border-slate-300 my-2"></div>
+                <div class="text-center mt-4 uppercase font-bold tracking-widest text-[10px]">Terima Kasih Atas Kunjungan Anda</div>
+                <div class="text-center italic text-[9px] mt-1 italic">Barang yang sudah dibeli tidak dapat ditukar</div>
+            `;
+
+            closePayment();
+            document.getElementById('receipt-modal').classList.remove('hidden');
+            document.getElementById('receipt-modal').classList.add('flex');
+        }
+
+        function newOrder() {
+            document.getElementById('receipt-modal').classList.add('hidden');
+            document.getElementById('receipt-modal').classList.remove('flex');
+            clearCart();
+        }
+
+        init();
+    </script>
+</body>
+</html>
+
